@@ -5,10 +5,10 @@ on:
     types: closed
 
 jobs:
-  build:
+  version:
     runs-on: ubuntu-latest
     steps:
-      - name: Tag
+      - name: Tag with semantic version
         uses: K-Phoen/semver-release-action@master
         with:
           release_branch: master
