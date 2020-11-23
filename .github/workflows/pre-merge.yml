@@ -1,0 +1,16 @@
+name: Required Labels
+
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, synchronize]
+    branches:
+      - master
+
+jobs:
+  pre-merge-label-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: yashhy/pr-label-check-and-comment-action@master
+        with:
+          required_labels: 'patch,minor,major'
+          GITHUB_TOKEN: '${{ secrets.PERSONAL_ACCESS_TOKEN }}'
