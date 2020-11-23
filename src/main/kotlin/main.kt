@@ -1,6 +1,6 @@
 fun main(args: Array<String>) {
     println("Hello World!")
-    println(somethingToTest(1))
+    println(addOne(1))
 }
 
-fun somethingToTest(input: Int): Int = input + 1
+fun addOne(input: Int): Int = input + 1
