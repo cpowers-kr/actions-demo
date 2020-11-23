@@ -5,7 +5,12 @@ class Tests {
 
     @Test
     fun testAThing() {
-        assertEquals(2, somethingToTest(1))
+        assertEquals(2, addOne(1))
+    }
+
+    @Test
+    fun testAnotherThing() {
+        assertEquals(3, addOne(2))
     }
 
 }
