@@ -31,10 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: docker-remote.registry.kroger.com/library/postgres
-        credentials:
-          username: ${{ secrets.DOCKER_REMOTE_USER }}
-          password: ${{ secrets.DOCKER_REMOTE_PWD }}
+        image: postgres:latest
         env:
           POSTGRES_HOST_AUTH_METHOD: trust
           SPRING_PROFILES_ACTIVE: postgres-testing
