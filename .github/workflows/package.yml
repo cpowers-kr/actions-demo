@@ -1,0 +1,24 @@
+name: Package
+
+on:
+  pull_requet:
+    branches:
+      - master
+
+jobs:
+  smoke-test-and-package:
+    runs-on: ubuntu-latest
+    env:
+      COMPOSE_FILE: .ci/docker-compose.yml
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker Image
+        run: |
+          docker build . -t $GITHUB_SHA
+          docker run -d --name schemaservice $GITHUB_SHA
+          docker run --network container:schemaservice jwilder/dockerize -wait http://localhost:8080/actuator/health -timeout 120s -wait-retry-interval 5s
+      - name: Clean Up
+        if: ${{ success() }}
+        run: |
+          docker kill schemaservice
+          docker rm schemaservice
