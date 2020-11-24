@@ -12,5 +12,4 @@ class Tests {
     fun testAnotherThing() {
         assertEquals(3, addOne(2))
     }
-
 }

@@ -1,0 +1,15 @@
+name: Version Label Check
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  version-label-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: yashhy/pr-label-check-and-comment-action@master
+        with:
+          required_labels: 'major, minor, patch'
+          GITHUB_TOKEN: '${{ secrets.PERSONAL_ACCESS_TOKEN }}'

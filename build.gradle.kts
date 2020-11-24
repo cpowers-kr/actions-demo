@@ -3,6 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.4.10"
     application
+
+    id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
 }
 group = "me.kon2447"
 version = "1.0-SNAPSHOT"
