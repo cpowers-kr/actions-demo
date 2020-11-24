@@ -49,3 +49,21 @@ jobs:
         run: ./gradlew test --tests '*' --stacktrace
       - name: Lint Check
         run: ./gradlew ktlintCheck
+
+  package:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      COMPOSE_FILE: .ci/docker-compose.yml
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker Image
+        run: |
+          docker build . -t $GITHUB_SHA
+          docker run -d --name myservice $GITHUB_SHA
+      - name: Curl Service
+        run: docker run --network container:myservice jwilder/dockerize -wait http://localhost:8080/actuator/health -timeout 120s -wait-retry-interval 5s
+      - name: Clean Up
+        run: |
+          docker kill myservice
+          docker rm myservice
