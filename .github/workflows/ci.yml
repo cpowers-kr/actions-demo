@@ -45,7 +45,7 @@ jobs:
           java-version: 11
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Run tests from Gradle
-        run: ./gradlew test --test '*' --stacktrace
+      - name: Execute Tests
+        run: ./gradlew test --tests '*' --stacktrace
       - name: Lint Check
         run: ./gradlew ktlintCheck
