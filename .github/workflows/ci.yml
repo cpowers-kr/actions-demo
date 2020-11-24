@@ -25,6 +25,11 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew clean build --refresh-dependencies -x check -x test
+      - name: Archive Artifacts
+          uses: actions/upload-artifact@v2
+          with:
+            name: service.jar
+            path: build/libs/
 
   test:
     needs: build
