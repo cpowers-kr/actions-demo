@@ -1,9 +1,11 @@
 name: Package
 
 on:
-  pull_request:
-    branches:
-      - master
+  workflow_run:
+    workflows: ["Pre Merge CI"]
+    branches: [ master ]
+    types:
+      - completed
 
 jobs:
   smoke-test-and-package:
