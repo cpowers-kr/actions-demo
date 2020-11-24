@@ -15,10 +15,10 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build . -t $GITHUB_SHA
-          docker run -d --name schemaservice $GITHUB_SHA
-          docker run --network container:schemaservice jwilder/dockerize -wait http://localhost:8080/actuator/health -timeout 120s -wait-retry-interval 5s
+          docker run -d --name myservice $GITHUB_SHA
+          docker run --network container:myservice jwilder/dockerize -wait http://localhost:8080/actuator/health -timeout 120s -wait-retry-interval 5s
       - name: Clean Up
         if: ${{ success() }}
         run: |
-          docker kill schemaservice
-          docker rm schemaservice
+          docker kill myservice
+          docker rm myservice
