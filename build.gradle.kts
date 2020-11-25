@@ -6,7 +6,7 @@ plugins {
 
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
 }
-group = "me.kon2447"
+group = "me.demo"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -18,6 +18,10 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<Jar> {
+    archiveFileName.set("myservice.jar")
 }
 
 tasks.withType<KotlinCompile> {
