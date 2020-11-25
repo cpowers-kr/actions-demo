@@ -1,11 +1,13 @@
-name: Semantic Version
+name: Post Merge CD
 
 on:
   pull_request:
     types: closed
+    branches:
+      - master
 
 jobs:
-  version:
+  version-bump:
     runs-on: ubuntu-latest
     steps:
       - name: Tag with semantic version

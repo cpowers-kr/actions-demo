@@ -3,8 +3,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.4.10"
     application
+
+    id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
 }
-group = "me.kon2447"
+group = "me.demo"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -16,6 +18,10 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<Jar> {
+    archiveFileName.set("myservice.jar")
 }
 
 tasks.withType<KotlinCompile> {

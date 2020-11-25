@@ -3,8 +3,6 @@ name: Pre Merge CI
 on:
   pull_request:
     types: [opened, labeled, unlabeled, synchronize, reopened]
-    branches:
-      - master
 
 jobs:
   build:
@@ -18,18 +16,59 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v2
         with:
-          path: ~/.gradle/caches
+          path: |
+            ~/.gradle/caches
+            /build
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew clean build --refresh-dependencies -x check -x test
-
-  label-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: yashhy/pr-label-check-and-comment-action@master
+      - name: Archive Artifacts
+        uses: actions/upload-artifact@v2
         with:
-          required_labels: 'major, minor, patch'
-          GITHUB_TOKEN: '${{ secrets.PERSONAL_ACCESS_TOKEN }}'
+          name: service.jar
+          path: build/libs/
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+          SPRING_PROFILES_ACTIVE: postgres-testing
+          POSTGRES_PASSWORD: secure
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Execute Tests
+        run: ./gradlew test --tests '*' --stacktrace
+      - name: Lint Check
+        run: ./gradlew ktlintCheck
+
+  package:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      COMPOSE_FILE: .ci/docker-compose.yml
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker Image
+        run: |
+          docker build . -t $GITHUB_SHA
+          docker run -d --name myservice $GITHUB_SHA
+      - name: Curl Service
+        run: docker run --network container:myservice jwilder/dockerize -wait http://localhost:8080/actuator/health -timeout 120s -wait-retry-interval 5s
+      - name: Clean Up
+        run: |
+          docker kill myservice
+          docker rm myservice
