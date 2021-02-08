@@ -12,11 +12,11 @@ jobs:
       - name: Echo REF
         run: echo $GITHUB_REF
       - name: Add TAG to env file
-        run: echo "dockerTag=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+        run: echo "::set-output name=dockerTag::${GITHUB_REF/refs\/tags\//}"
   
   job2:
     runs-on: ubuntu-latest
     needs: [job1]
     steps:
       - name: Echo my env var
-        run: echo ${{ env.dockerTag }}
+        run: echo ${{ needs.job1.outputs.dockerTag }}
