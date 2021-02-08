@@ -4,11 +4,16 @@ on:
   release:
     types: [released]
 
+env:
+  MY_TAG: ${GITHUB_REF/refs\/tags\//}
+
 jobs:
   job1:
     if: ${{ github.event_name == 'release' }}
     runs-on: ubuntu-latest
     steps:
+      - name: echo my tag
+        run: echo $MY_TAG
       - name: Echo REF
         run: echo $GITHUB_REF
       - name: Add TAG to env file
@@ -21,4 +26,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo docker tag
-        run: echo "${{ env.dockerTag }}"
+        run: $MY_TAG
