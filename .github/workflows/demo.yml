@@ -8,13 +8,7 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - name: Set env var
-        run: echo "GIT_TAG=${GITHUB_REF/refs\/tags\//}" >> $TAG
-  
-  job2:
-    runs-on: ubuntu-latest
-    needs: [job1]
-    steps:
-      - name: Echo Tag
-        run: echo $TAG
-        
+      - name: Echo event name
+        run: echo ${{ github.event_name }}
+      - name: Echo git_name env var
+        run: echo $GITHUB_EVENT_NAME
