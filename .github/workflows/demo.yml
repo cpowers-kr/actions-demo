@@ -5,7 +5,7 @@ on:
     types: [released]
 
 env:
-  MY_TAG: ${GITHUB_REF/refs\/tags\//}
+  MY_TAG: "${GITHUB_REF/refs\/tags\//}"
 
 jobs:
   job1:
