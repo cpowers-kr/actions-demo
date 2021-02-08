@@ -1,7 +1,8 @@
 name: Demo Some Things
 
 on:
-  release: [released]
+  release:
+    types: [released]
 
 jobs:
   job1:
