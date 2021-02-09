@@ -11,3 +11,7 @@ version-resolver:
   patch:
     labels:
       - 'patch'
+template: |
+  ## Changes
+
+  $CHANGES
