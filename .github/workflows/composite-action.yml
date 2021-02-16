@@ -7,8 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: action/checkout@v2
-        repository: 'powers2537/compiste-actions'
-        path: 'my-actions'
-      - ./my-actions/.github/actions/action-a
+        with:
+          path: 'my-actions'
+          repository: 'powers2537/compiste-actions'
+      - uses: ./my-actions/.github/actions/action-a
         with:
           who-to-greet: "Mona the github Octocat"
