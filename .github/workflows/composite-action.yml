@@ -6,10 +6,8 @@ jobs:
   use-a:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Other Repo
+      - name: Checkout Repo
         uses: actions/checkout@v2
-        with:
-          repository: 'powers2537/compiste-actions'
       - name: List Files
         run: ls -la
       - name: Run Action
