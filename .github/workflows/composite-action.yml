@@ -8,8 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          path: 'my-actions'
+          path: './my-tools'
           repository: 'powers2537/compiste-actions'
-      - uses: ./my-actions/.github/actions/action-a
+      - uses: ./my-tools/.github/actions/action-a
         with:
           who-to-greet: "Mona the github Octocat"
