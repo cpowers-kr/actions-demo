@@ -15,7 +15,7 @@ jobs:
         with:
           who-to-greet: "Mona the github Octocat"
       - name: Run Action B
-        uses: ./github/actions/action-b
+        uses: ./.github/actions/action-b
         with:
           who-to-greet: "Santa Claus"
   use-b:
@@ -25,6 +25,6 @@ jobs:
         with:
           repository: powers2537/composite-actions
       - name: Run Action B
-        uses: ./github/actions/action-b
+        uses: ./.github/actions/action-b
         with:
           who-to-greet: "Mario"
