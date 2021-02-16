@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+        with:
+          repository: powers2537/composite-actions
       - name: List Files
         run: ls -la
       - name: Run Action
