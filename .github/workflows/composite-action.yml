@@ -9,9 +9,8 @@ jobs:
       - name: Checkout Other Repo
         uses: actions/checkout@v2
         with:
-          path: 'my-tools'
           repository: 'powers2537/compiste-actions'
       - name: Run workflow
-        uses: ./my-tools/.github/actions/action-a
+        uses: ./.github/actions/action-a
         with:
           who-to-greet: "Mona the github Octocat"
