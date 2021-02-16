@@ -6,11 +6,13 @@ jobs:
   use-a:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Checkout Other Repo
         uses: actions/checkout@v2
         with:
           repository: 'powers2537/compiste-actions'
+          path: my-actions 
       - name: Run workflow
-        uses: ./.github/actions/action-a
+        uses: ./my-actions/.github/actions/action-a
         with:
           who-to-greet: "Mona the github Octocat"
